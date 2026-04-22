@@ -2,7 +2,7 @@
 
 Hirix is a full-stack AI-powered platform designed to empower candidates in their job search. It simulates **job interviews (HR & Technical)**, generates **tailored CVs (LaTeX)**, and provides **AI-driven profile critiques** to help users land their dream jobs.
 
-The project was developed collaboratively by a team of two developers.
+The project was developed collaboratively by a team of three developers.
 
 ---
 
