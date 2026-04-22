@@ -1,260 +1,168 @@
-# Hirix - Simulation d'Entretiens par IA
+# 🚀 Hirix – AI Interview Simulation & Career Prep Platform
 
-Hirix est une plateforme complète de simulation d'entretiens d'embauche (RH et Techniques) utilisant l'Intelligence Artificielle pour aider les candidats à se préparer. Ce projet a été réalisé en collaboration par une équipe de deux développeurs.
+Hirix is a full-stack AI-powered platform designed to empower candidates in their job search. It simulates **job interviews (HR & Technical)**, generates **tailored CVs (LaTeX)**, and provides **AI-driven profile critiques** to help users land their dream jobs.
 
-## ✨ Fonctionnalités Principales
+The project was developed collaboratively by a team of two developers.
 
-- 🤖 **Simulations d'Entretiens** - Modules dédiés pour les entretiens RH et Techniques.
-- 📊 **Évaluation Automatique** - Analyse intelligente des réponses avec feedback détaillé.
-- 🔐 **Authentification Sécurisée** - Système complet basé sur JWT (Access & Refresh tokens).
-- 🎨 **Interface Premium** - Design moderne avec mode sombre, gradients et animations fluides.
-- 📱 **Responsive Design** - Expérience optimisée sur tous les supports.
+---
 
-## 🚀 Démarrage Rapide
+## 🎯 Project Highlights
 
-### Prérequis
-- Node.js 16+ installé
-- (Optionnel) Base de données MongoDB
+* 🤖 **AI Interview Engine**: Realistic HR & Technical simulations via n8n/LLM integration.
+* 📄 **Dynamic CV Generation**: Automated creation of LaTeX-based resumes tailored to specific job offers.
+* 🧠 **Intelligent Feedback**: Automated response evaluation with structured performance insights.
+* 📊 **Job Tracker**: Full lifecycle management for job applications and to-do lists.
+* 🔐 **Secure Architecture**: JWT-based auth (Access + Refresh tokens) with HttpOnly cookies.
+* 🎨 **Premium UI**: Modern Glassmorphism design with responsive dark mode.
 
-### 1. Configuration du Backend
+---
 
-```bash
-cd server
+## ✨ Key Features
 
-# Installation des dépendances
-npm install
+### 🧑‍💼 Interview Simulation
+* **HR Module**: Behavioral interview simulation with dynamic question flows.
+* **Technical Module**: Specialized technical question generation based on user domain.
+* **Real-time Interaction**: Question → Response → Next Step logic powered by AI.
 
-# Créer le fichier .env (IMPORTANT !)
-# Copiez .env.example vers .env et mettez à jour les valeurs
-# Pour le développement, vous pouvez laisser MONGO_URI vide pour utiliser le stockage JSON local
-```
+### 📄 Career Tools & AI Analysis
+* **CV Architect**: Generates professional LaTeX code for resumes based on user profile and job descriptions.
+* **Profile Critique**: AI-powered analysis of user profiles to identify strengths and areas for improvement.
+* **Application Tracker**: Manage job applications, statuses, and associated CV versions.
 
-Créez `server/.env` :
-```env
-MONGO_URI=
-PORT=5000
-NODE_ENV=development
+### 🔐 Authentication & Security
+* **JWT Ecosystem**: Secure authentication with automatic token refreshing.
+* **HttpOnly Cookies**: Protection against XSS by storing refresh tokens securely.
+* **Rate Limiting**: Brute-force protection for login and registration endpoints.
+* **Token Blacklist**: System to invalidate tokens upon logout or security breach.
 
-JWT_ACCESS_SECRET=votre_cle_secrete_access_token_a_changer
-JWT_REFRESH_SECRET=votre_cle_secrete_refresh_token_a_changer
-JWT_ACCESS_EXPIRES_IN=15m
-JWT_REFRESH_EXPIRES_IN=7d
+### 🎨 UI/UX
+* **Modern Interface**: Sleek dark theme with animated gradients.
+* **Interactive Dashboard**: Overview of recent applications, interviews, and tasks.
+* **Responsive Design**: Seamless experience across mobile, tablet, and desktop.
 
-CLIENT_URL=http://localhost:5173
-```
+---
 
-```bash
-# Lancer le serveur
-npm run dev
-```
+## 🧠 My Contributions (Aram FILALI)
 
-Le serveur tournera sur http://localhost:5000
+As a core contributor, I focused on the **AI orchestration, interview logic, and backend architecture**:
 
-### 2. Configuration du Frontend
+### 🤖 AI Orchestration & Logic
+* Designed and implemented the **HR and Technical interview simulation modules**.
+* Built the **AI Evaluation System** to provide structured feedback on candidate performance.
+* Integrated **n8n workflows** to handle complex LLM interactions for simulations and CV generation.
 
-```bash
-cd client
+### ⚙️ Backend Architecture
+* Developed the **RESTful API** using Node.js and Express.
+* Implemented the **Secure Auth System** (JWT Access/Refresh, Cookie management).
+* Designed the **storage abstraction** (supporting both MongoDB and local JSON fallback).
 
-# Installation des dépendances
-npm install
+### 🔗 Full-Stack Integration
+* Bridged the React frontend with the AI-driven backend services.
+* Managed **dynamic state flows** for multi-step interview simulations.
+* Implemented **CV management logic**, linking generated resumes to job applications.
 
-# Lancer le serveur de développement
-npm run dev
-```
+---
 
-Le frontend tournera sur http://localhost:5173 (ou 5174 si le port 5173 est occupé)
+## 🛠️ Tech Stack
 
-### 3. Tester l'Application
+### Backend
+* **Runtime**: Node.js, Express
+* **Database**: MongoDB (Mongoose ODM) / Local JSON Fallback
+* **AI Integration**: n8n Webhooks, LLM (via n8n)
+* **Security**: JWT, bcrypt, cookie-parser, express-rate-limit
 
-1. Ouvrez http://localhost:5173 dans votre navigateur
-2. Cliquez sur "S'inscrire" pour créer un nouveau compte
-3. Remplissez le nom d'utilisateur, l'email et le mot de passe (min 8 caractères)
-4. Vous serez redirigé vers le tableau de bord
-5. Testez la déconnexion et la connexion
+### Frontend
+* **Framework**: React 19, Vite
+* **Routing**: React Router 7
+* **API Client**: Axios
+* **Styling**: Modern CSS (Glassmorphism, Animations)
 
-## 📚 Points d'Entrée API (Endpoints)
+---
 
-### Routes d'Authentification
-
-| Méthode | Endpoint | Description | Protégé |
-|---------|----------|-------------|---------|
-| POST | `/api/auth/register` | Créer un nouvel utilisateur | Non |
-| POST | `/api/auth/login` | Connecter un utilisateur | Non |
-| POST | `/api/auth/refresh` | Rafraîchir l'access token | Non |
-| POST | `/api/auth/logout` | Déconnecter l'utilisateur | Non |
-| GET | `/api/me` | Récupérer les infos de l'utilisateur actuel | Oui |
-
-### Routes de Simulation & Analyse
-
-| Méthode | Endpoint | Description | Protégé |
-|---------|----------|-------------|---------|
-| POST | `/api/hr-interview` | Lancer une simulation RH (via n8n) | Oui |
-| POST | `/api/technical-interview` | Générer des questions techniques | Non |
-| POST | `/api/profile-critique` | Analyser et critiquer un profil | Oui |
-| GET | `/api/cvs` | Gérer les CVs uploadés | Oui |
-
-### Exemple : Créer un Utilisateur
-
-```bash
-curl -X POST http://localhost:5000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "testuser",
-    "email": "test@example.com",
-    "password": "password123"
-  }'
-```
-
-### Exemple : Connexion
-
-```bash
-curl -X POST http://localhost:5000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@example.com",
-    "password": "password123"
-  }'
-```
-
-## 🔒 Sécurité
-
-- ✅ **bcrypt** pour le hachage des mots de passe (12 rounds)
-- ✅ **JWT** avec access tokens (15min) & refresh tokens (7 jours)
-- ✅ **Cookies httpOnly** pour les refresh tokens
-- ✅ **Rate limiting** - 5 tentatives par tranche de 15 minutes
-- ✅ **Token blacklist** - Invalidation des tokens stockée en base
-- ✅ **CORS** configuré pour le frontend
-- ✅ **Validation des entrées** côté client et serveur
-
-## 🗂️ Modes de Stockage
-
-### Mode Fichier JSON (Par défaut)
-Idéal pour le développement sans MongoDB :
-- Utilisateurs stockés dans `server/data/users.json`
-- Tokens stockés dans `server/data/refreshTokens.json`
-- Création automatique au premier lancement
-
-### Mode MongoDB
-Définissez `MONGO_URI` dans `server/.env` :
-```env
-MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/authdb
-```
-
-## 📁 Structure du Projet
+## 📁 Project Structure
 
 ```
 Hirix/
-├── client/                  # Frontend React
+├── client/             # React frontend (Vite)
 │   ├── src/
-│   │   ├── api/            # Configuration Axios
-│   │   ├── components/     # Composants React
-│   │   ├── context/        # Contexte d'Authentification
-│   │   ├── pages/          # Login, Inscription, Dashboard
-│   │   └── ...
-│   └── package.json
-│
-└── server/                  # Backend Node.js
-    ├── controllers/        # Contrôleurs de routes
-    ├── middleware/         # Middleware Auth & Erreurs
-    ├── models/             # Modèles Mongoose
-    ├── routes/             # Routes de l'API
-    ├── utils/              # Utilitaires de stockage
-    └── package.json
+│   │   ├── api/       # Axios interceptors & services
+│   │   ├── components/# Reusable UI elements
+│   │   └── pages/     # Dashboard, Interview, CV Builder...
+└── server/             # Node.js backend
+    ├── controllers/   # Business logic (Auth, Interview, CV...)
+    ├── models/        # Mongoose schemas
+    ├── routes/        # API endpoint definitions
+    └── utils/         # Auth helpers & storage fallback
 ```
 
-## 🎨 Interface Utilisateur
+---
 
-L'application arbore un thème sombre moderne avec :
-- Arrière-plans en dégradé animé
-- Cartes au style Glassmorphism
-- Transitions fluides et effets de survol
-- Palette de couleurs premium (indigo/purple)
-- Design entièrement responsive
+## ⚙️ Setup Instructions
 
-## 🧪 Tests
-
-### Tests Manuels
-1. Inscrivez un nouvel utilisateur
-2. Vérifiez la validation du formulaire (email invalide, mot de passe trop court)
-3. Connectez-vous avec l'utilisateur créé
-4. Accédez au tableau de bord
-5. Déconnectez-vous
-6. Tentez d'accéder au tableau de bord en étant déconnecté (redirection attendue)
-
-### Test de Limite de Requêtes (Rate Limiting)
-Tentez de vous connecter avec un mauvais mot de passe 6 fois rapidement. Vous devriez recevoir :
-```json
-{
-  "success": false,
-  "message": "Too many authentication attempts, please try again later"
-}
+### 1. Backend
+```bash
+cd server
+npm install
+# Configure .env (see below)
+npm run dev
 ```
 
-## 🛠️ Technologies Utilisées
+### 2. Frontend
+```bash
+cd client
+npm install
+npm run dev
+```
 
-### Backend
-- Node.js & Express
-- bcrypt (hachage de mot de passe)
-- jsonwebtoken (JWT)
-- Mongoose (ODM MongoDB)
-- cookie-parser (gestion des cookies)
-- express-rate-limit (limite de requêtes)
-- CORS
+---
 
-### Frontend
-- React 19
-- React Router DOM (navigation)
-- Axios (client HTTP)
-- Vite (outil de build)
-- CSS Moderne avec animations
+## 🔐 Environment Variables
 
-## 📝 Variables d'Environnement
-
-### Serveur (.env)
+### Server (`server/.env`)
 ```env
-MONGO_URI=                    # Connexion MongoDB (optionnel)
-PORT=5000                     # Port du serveur
-NODE_ENV=development          # Environnement
-JWT_ACCESS_SECRET=secret1     # Secret pour l'access token
-JWT_REFRESH_SECRET=secret2    # Secret pour le refresh token
-JWT_ACCESS_EXPIRES_IN=15m     # Expiration de l'access token
-JWT_REFRESH_EXPIRES_IN=7d     # Expiration du refresh token
-CLIENT_URL=http://localhost:5173  # URL Frontend pour CORS
+MONGO_URI=              # Optional (defaults to JSON storage if empty)
+PORT=5000
+NODE_ENV=development
+JWT_ACCESS_SECRET=      # Long random string
+JWT_REFRESH_SECRET=     # Long random string
+CLIENT_URL=http://localhost:5173
 ```
 
-### Client (.env)
-```env
-VITE_API_URL=http://localhost:5000/api  # URL de l'API Backend
-```
+---
 
-## 🚀 Déploiement en Production
+## 🚀 API Overview
 
-1. Définissez `NODE_ENV=production` dans `server/.env`
-2. Utilisez des secrets JWT complexes et aléatoires
-3. Activez HTTPS (les cookies deviendront sécurisés automatiquement)
-4. Configurez `MONGO_URI` vers une base de données de production
-5. Build du frontend : `cd client && npm run build`
-6. Servez les fichiers statiques depuis `client/dist`
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/auth/login` | Secure user authentication |
+| `POST` | `/api/hr-interview` | Start/Continue HR AI simulation |
+| `POST` | `/api/technical-interview` | Generate technical questions |
+| `POST` | `/api/profile-critique` | AI profile analysis |
+| `POST` | `/api/cvs/generate` | Generate tailored LaTeX CV |
+| `GET` | `/api/job-applications` | Fetch user job applications |
 
-## 🤝 Contributions
+---
 
-Ce projet a été réalisé en collaboration.
+## 🧪 Security Features
 
-### Moi (Aram FILALI)
-- **Développement des modules d’entretiens RH** (simulation et logique de questions)
-- **Développement des modules d’entretiens techniques** (simulation et logique de questions)
-- **Implémentation des systèmes d’évaluation des réponses** : Mise en place de la logique d'évaluation automatique.
-- **Intégration des fonctionnalités liées aux simulations d'entretien** : Développement des flux frontend/backend.
+* **Password Hashing**: bcrypt with salted rounds.
+* **JWT Auth**: Access & Refresh tokens for secure sessions.
+* **Secure Cookies**: Refresh tokens stored in HttpOnly cookies.
+* **Rate Limiting**: Anti brute-force middleware on auth routes.
+* **CORS Protection**: Restricted to authorized frontend origins.
 
-## 📄 Licence
+---
 
-Ce projet est réalisé à des fins éducatives.
+## 📈 Future Improvements
 
-## 🚀 Améliorations Futures
+* 📧 Email verification system
+* 🔑 OAuth2 integration (Google/GitHub)
+* 🧠 Advanced CV analysis vs Job Descriptions
+* 💬 Real-time interview chat & voice mode
+* 🌍 Multi-language support for simulations
 
-N'hésitez pas à améliorer ce projet ! Quelques idées :
-- Vérification d'email
-- Fonctionnalité de réinitialisation de mot de passe
-- Authentification à deux facteurs (2FA)
-- Connexion via réseaux sociaux (OAuth)
-- Gestion du profil utilisateur
+---
+
+## 📄 License
+
+This project is developed for educational purposes and portfolio demonstration.
