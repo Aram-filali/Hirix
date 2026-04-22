@@ -1,0 +1,121 @@
+console.log("Initializing server...");
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import rateLimit from 'express-rate-limit';
+import authRoutes from './routes/auth.js';
+import profileRoutes from './routes/profile.js';
+import jobApplicationRoutes from './routes/jobApplications.js';
+import cvRoutes from './routes/cvs.js';
+import todoRoutes from './routes/todos.js';
+import profileCritiqueRoutes from './routes/profileCritique.js';
+import hrInterviewRoutes from './routes/hrInterview.js';
+import technicalInterviewRoutes from './routes/technicalInterview.js';
+import { errorHandler, notFound } from './middleware/errorHandler.js';
+
+dotenv.config();
+
+// ES module path fix
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// CORS configuration - allow credentials (cookies)
+// In production, frontend is served from same domain, so allow that
+// In development, allow localhost:5173
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production'
+        ? process.env.CLIENT_URL || 'https://hirex-ad9w.onrender.com'
+        : 'http://localhost:5173',
+    credentials: true
+}));
+
+console.log(process.env.CLIENT_URL);
+
+// Body parser
+app.use(express.json());
+app.use(cookieParser());
+
+// Rate limiting for auth routes
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // 5 requests per windowMs
+    message: {
+        success: false,
+        message: 'Too many authentication attempts, please try again later'
+    },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Apply rate limiting to auth routes
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
+
+// API Routes
+app.use('/api', authRoutes);
+app.use('/api', profileRoutes);
+app.use('/api', jobApplicationRoutes);
+app.use('/api/cvs', cvRoutes);
+app.use('/api', todoRoutes);
+app.use('/api/profile-critique', profileCritiqueRoutes);
+app.use('/api/hr-interview', hrInterviewRoutes);
+app.use('/api/technical-interview', technicalInterviewRoutes);
+
+// Serve static files from the React app (in production)
+if (process.env.NODE_ENV === 'production') {
+    const clientBuildPath = path.join(__dirname, '../client/dist');
+    app.use(express.static(clientBuildPath));
+
+    // Handle React routing - return all non-API requests to React app
+    // Using a middleware without a path to catch everything remaining (Express 5 safe)
+    app.use((req, res) => {
+        res.sendFile(path.join(clientBuildPath, 'index.html'));
+    });
+} else {
+    // Development mode - just show API status
+    app.get('/', (req, res) => {
+        res.json({
+            success: true,
+            message: 'Authentication API is running',
+            storage: process.env.MONGO_URI && process.env.MONGO_URI !== 'your_mongodb_cluster_uri'
+                ? 'MongoDB'
+                : 'JSON File'
+        });
+    });
+}
+
+// Error handling
+app.use(notFound);
+app.use(errorHandler);
+
+// Database Connection
+const connectDB = async () => {
+    if (!process.env.MONGO_URI || process.env.MONGO_URI === 'your_mongodb_cluster_uri') {
+        console.log('⚠️  MONGO_URI not configured, using JSON file storage');
+        console.log('📁 Users will be stored in: server/data/users.json');
+        console.log('📁 Tokens will be stored in: server/data/refreshTokens.json');
+        return;
+    }
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log('✅ MongoDB Connected');
+    } catch (error) {
+        console.error('❌ MongoDB connection error:', error.message);
+        console.log('⚠️  Falling back to JSON file storage');
+    }
+};
+
+connectDB();
+
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📍 API URL: https://hirex-ad9w.onrender.com`);
+    console.log(`🔐 Auth endpoints available at: https://hirex-ad9w.onrender.com/api/auth`);
+});
