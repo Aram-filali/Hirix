@@ -1,10 +1,15 @@
 import axios from 'axios';
 
 const api = axios.create({
+<<<<<<< HEAD
     // If we're in development, talk to localhost:5000. 
     // In production, use relative '/api' because everything is on the same domain!
     baseURL: import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000/api' : '/api'),
     withCredentials: true,
+=======
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+    withCredentials: true, // Important for httpOnly cookies
+>>>>>>> ec2df8a35ebb85af696663c0f933c21b55327c67
     headers: {
         'Content-Type': 'application/json'
     }
@@ -37,7 +42,11 @@ api.interceptors.response.use(
             try {
                 // Try to refresh the token
                 const { data } = await axios.post(
+<<<<<<< HEAD
                     `${import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000/api' : '/api')}/auth/refresh`,
+=======
+                    `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/refresh`,
+>>>>>>> ec2df8a35ebb85af696663c0f933c21b55327c67
                     {},
                     { withCredentials: true }
                 );

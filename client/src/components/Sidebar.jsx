@@ -60,7 +60,11 @@ const Sidebar = () => {
     return (
         <aside className="dashboard-sidebar">
             <div className="sidebar-brand">
+<<<<<<< HEAD
                 <h2>HIRIX</h2>
+=======
+                <h2>CV Builder</h2>
+>>>>>>> ec2df8a35ebb85af696663c0f933c21b55327c67
             </div>
             <nav className="sidebar-nav">
                 {navItems.map((item) => (

@@ -71,7 +71,7 @@ export const generateCV = async (req, res) => {
         try {
             // Send to n8n
             console.log('Sending data to n8n webhook...');
-            const n8nResponse = await fetch('https://rahim-farhat.app.n8n.cloud/webhook/bd1fe569-0009-4ed3-bb14-6e05a6e89d97', {
+            const n8nResponse = await fetch('https://rahim-n8n.app.n8n.cloud/webhook/bd1fe569-0009-4ed3-bb14-6e05a6e89d97', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

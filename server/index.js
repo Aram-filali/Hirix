@@ -58,7 +58,17 @@ const authLimiter = rateLimit({
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
 
-// API Routes
+// Routes
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        message: 'Authentication API is running',
+        storage: process.env.MONGO_URI && process.env.MONGO_URI !== 'your_mongodb_cluster_uri'
+            ? 'MongoDB'
+            : 'JSON File'
+    });
+});
+
 app.use('/api', authRoutes);
 app.use('/api', profileRoutes);
 app.use('/api', jobApplicationRoutes);
