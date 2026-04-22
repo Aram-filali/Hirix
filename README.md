@@ -8,12 +8,12 @@ The project was developed collaboratively by a team of three developers.
 
 ## 🎯 Project Highlights
 
-* 🤖 **AI Interview Engine**: Realistic HR & Technical simulations via n8n/LLM integration.
-* 📄 **Dynamic CV Generation**: Automated creation of LaTeX-based resumes tailored to specific job offers.
-* 🧠 **Intelligent Feedback**: Automated response evaluation with structured performance insights.
-* 📊 **Job Tracker**: Full lifecycle management for job applications and to-do lists.
-* 🔐 **Secure Architecture**: JWT-based auth (Access + Refresh tokens) with HttpOnly cookies.
-* 🎨 **Premium UI**: Modern Glassmorphism design with responsive dark mode.
+**AI Interview Engine**: Realistic HR & Technical simulations via n8n/LLM integration.
+**Dynamic CV Generation**: Automated creation of LaTeX-based resumes tailored to specific job offers.
+**Intelligent Feedback**: Automated response evaluation with structured performance insights.
+**Job Tracker**: Full lifecycle management for job applications and to-do lists.
+**Secure Architecture**: JWT-based auth (Access + Refresh tokens) with HttpOnly cookies.
+**Premium UI**: Modern Glassmorphism design with responsive dark mode.
 
 ---
 
@@ -46,17 +46,17 @@ The project was developed collaboratively by a team of three developers.
 
 As a core contributor, I focused on the **AI orchestration, interview logic, and backend architecture**:
 
-### 🤖 AI Orchestration & Logic
+### AI Orchestration & Logic
 * Designed and implemented the **HR and Technical interview simulation modules**.
 * Built the **AI Evaluation System** to provide structured feedback on candidate performance.
 * Integrated **n8n workflows** to handle complex LLM interactions for simulations and CV generation.
 
-### ⚙️ Backend Architecture
+### Backend Architecture
 * Developed the **RESTful API** using Node.js and Express.
 * Implemented the **Secure Auth System** (JWT Access/Refresh, Cookie management).
 * Designed the **storage abstraction** (supporting both MongoDB and local JSON fallback).
 
-### 🔗 Full-Stack Integration
+### Full-Stack Integration
 * Bridged the React frontend with the AI-driven backend services.
 * Managed **dynamic state flows** for multi-step interview simulations.
 * Implemented **CV management logic**, linking generated resumes to job applications.
@@ -151,15 +151,6 @@ CLIENT_URL=http://localhost:5173
 * **Rate Limiting**: Anti brute-force middleware on auth routes.
 * **CORS Protection**: Restricted to authorized frontend origins.
 
----
-
-## 📈 Future Improvements
-
-* 📧 Email verification system
-* 🔑 OAuth2 integration (Google/GitHub)
-* 🧠 Advanced CV analysis vs Job Descriptions
-* 💬 Real-time interview chat & voice mode
-* 🌍 Multi-language support for simulations
 
 ---
 
